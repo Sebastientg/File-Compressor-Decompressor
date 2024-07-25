@@ -44,9 +44,9 @@ void HCTree::build(const vector<int>& freqs) {
         HCNode* low_node2 = pq.top();
         pq.pop();
 
-        // combine total counts
+        // Combine total counts
         int total_freq = low_node1->count + low_node2->count; 
-        // create a parent node with popped elements as children 
+        // Create a parent node with popped elements as children 
         HCNode* new_parent = new HCNode(total_freq, 0);
 
         // Set parent-child relationships
