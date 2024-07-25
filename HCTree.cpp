@@ -27,7 +27,7 @@ void HCTree::build(const vector<int>& freqs) {
 
     priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> pq;
 
-    // Populate min heap
+    // populate min heap
     for (unsigned int i = 0; i < freqs.size(); ++i) {
         if (freqs[i] > 0) {
             HCNode* node = new HCNode(freqs[i], i);
@@ -38,29 +38,29 @@ void HCTree::build(const vector<int>& freqs) {
 
     while (pq.size() > 1) {
 
-        // Pop two lowest elements in priority queue
+        // pop two lowest elements in priority queue
         HCNode* low_node1 = pq.top();
         pq.pop();
         HCNode* low_node2 = pq.top();
         pq.pop();
 
-        // Combine total counts
+        // combine total counts
         int total_freq = low_node1->count + low_node2->count; 
-        // Create a parent node with popped elements as children 
+        // create a parent node with popped elements as children 
         HCNode* new_parent = new HCNode(total_freq, 0);
 
-        // Set parent-child relationships
+        // set parent-child relationships
         new_parent->c0 = low_node1;
         new_parent->c1 = low_node2;
         low_node1->p = new_parent;
         low_node2->p = new_parent;
 
-        // Push new parent node onto queue
+        // push new parent node onto queue
         pq.push(new_parent);
 
     }
 
-    // Only one node
+    // only one node
     if (pq.size() == 1) {
         root = pq.top();
         pq.pop();
@@ -76,15 +76,15 @@ void HCTree::build(const vector<int>& freqs) {
 */
 void HCTree::encode(unsigned char symbol, FancyOutputStream & out) const {
 
-    // Find node with given symbol
+    // find node with given symbol
     HCNode* leaf_node = leaves[symbol];
 
-    // If leaf_node is still nullptr, symbol not found in tree
+    // if leaf_node is still nullptr, symbol not found in tree
     if (!leaf_node) {
         return;
     }
 
-    // Traverse up from leaf node to root and store binary 
+    // traverse up from leaf node to root and store binary 
     vector<int> binary;
     HCNode* current_node = leaf_node;
     while (current_node->p) {  
@@ -97,7 +97,7 @@ void HCTree::encode(unsigned char symbol, FancyOutputStream & out) const {
         current_node = parent;
     }
 
-    // Write bits to the output stream
+    // write bits to the output stream
     for (int i = binary.size() - 1; i >= 0; --i) {
         out.write_bit(binary[i]);
     }
@@ -111,23 +111,23 @@ void HCTree::encode(unsigned char symbol, FancyOutputStream & out) const {
 unsigned char HCTree::decode(FancyInputStream & in) const { 
     HCNode* current = root; 
 
-    // Traverse down the tree until a leaf is reached
+    // traverse down the tree until a leaf is reached
     while (current->c0 || current->c1) {
-        int bit = in.read_bit();  // Read the next bit from the input stream
+        int bit = in.read_bit();  // read the next bit from the input stream
         if (bit == -1) {
-            // Handle error or end of input stream
+            // handle error or end of input stream
             return 0;
         }
         if (bit == 0) {
-            // Move to the left child 
+            // move to the left child 
             current = current->c0;
         } else {
-            // Move to the right child 
+            // move to the right child 
             current = current->c1;
         }
     }
 
-    // Return the symbol associated with the leaf 
+    // return the symbol associated with the leaf 
     return current->symbol;
     
 }
