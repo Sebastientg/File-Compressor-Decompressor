@@ -7,18 +7,19 @@ This project implements Huffman compression and decompression algorithms in C++.
 
 ## File Structure
 
-- example_files/: Directory containing example files for testing.
-- .gdbinit: GDB configuration file.
-- HCTree.cpp: Source file containing the implementation of the Huffman Coding Tree.
-- HCTree.hpp: Header file containing the declarations for the Huffman Coding Tree.
-- Helper.cpp: Source file containing helper functions and classes for file handling.
-- Helper.hpp: Header file containing the declarations for helper functions and classes.
-- Makefile: Makefile for compiling the project.
-- README.md: This README file.
-- compress.cpp: Source file containing the main function for compressing files.
-- refcompress: Reference binary for compressing files.
-- refuncompress: Reference binary for decompressing files.
-- uncompress.cpp: Source file containing the main function for decompressing files.
+- `example_files/`: Directory containing example files for testing.
+- `.gdbinit`: GDB configuration file.
+- `Makefile`: Makefile for compiling the project.
+- `README.md`: This README file.
+- `HCTree.cpp`: Source file containing the implementation of the Huffman Coding Tree.
+- `HCTree.hpp`: Header file containing the declarations for the Huffman Coding Tree.
+- `Helper.cpp`: Source file containing helper functions and classes for file handling.
+- `Helper.hpp`: Header file containing the declarations for helper functions and classes.
+- `compress.cpp`: Source file containing the main function for compressing files.
+- `uncompress.cpp`: Source file containing the main function for decompressing files.
+- `refcompress`: Reference binary for compressing files.
+- `refuncompress`: Reference binary for decompressing files.
+
 
 # Prerequisites
 
@@ -50,8 +51,8 @@ To compress a file, run the following command:
 ./compress <input_file> <output_file>
 ```
 
-- <input_file>: Path to the file you want to compress.
-- <output_file>: Path where the compressed file will be saved.
+- `<input_file>`: Path to the file you want to compress.
+- `<output_file>`: Path where the compressed file will be saved.
 
 Example:
 
@@ -67,8 +68,8 @@ To decompress a file, run the following command:
 ./uncompress <input_file> <output_file>
 ```
 
-- <input_file>: Path to the compressed file.
-- <output_file>: Path where the decompressed file will be saved.
+- `<input_file>`: Path to the compressed file.
+- `<output_file>`: Path where the decompressed file will be saved.
   
 Example:
 
@@ -84,7 +85,7 @@ Example:
 ./compress example_files/input.txt compressed.bin
 ```
 
-This will take example_files/input.txt and create a compressed version named compressed.bin.
+This will take `example_files/input.txt` and create a compressed version named `compressed.bin`.
 
 2. Decompress the file:
 
@@ -92,7 +93,7 @@ This will take example_files/input.txt and create a compressed version named com
 ./uncompress compressed.bin example_files/output.txt
 ```
 
-This will take compressed.bin and restore it to example_files/output.txt, which should be identical to example_files/input.txt.
+This will take `compressed.bin` and restore it to `example_files/output.txt`, which should be identical to `example_files/input.txt`.
 
 ## Acknowledgments
 
