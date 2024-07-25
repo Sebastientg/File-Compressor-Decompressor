@@ -86,7 +86,7 @@ Example:
 
 This will take example_files/input.txt and create a compressed version named compressed.bin.
 
-3. Decompress the file:
+2. Decompress the file:
 
 ```
 ./uncompress compressed.bin example_files/output.txt
