@@ -1,6 +1,6 @@
 #include "Helper.hpp"
 
-// error function implementation
+// Error function implementation
 void error(const char* message) {
     cerr << "ERROR: " << message << endl; exit(1);
 }
