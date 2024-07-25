@@ -84,7 +84,7 @@ Example:
 ./compress example_files/input.txt compressed.bin
 ```
 
-This will take example_files/input.txt and create a compressed version named compressed.bin.
+  This will take example_files/input.txt and create a compressed version named compressed.bin.
 
 2. Decompress the file:
 
@@ -92,7 +92,7 @@ This will take example_files/input.txt and create a compressed version named com
 ./uncompress compressed.bin example_files/output.txt
 ```
 
-This will take compressed.bin and restore it to example_files/output.txt, which should be identical to example_files/input.txt.
+  This will take compressed.bin and restore it to example_files/output.txt, which should be identical to example_files/input.txt.
 
 ## Acknowledgments
 
