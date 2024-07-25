@@ -3,112 +3,72 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    // Check for correct arguments
+    // Check for correct number of arguments
     if (argc < 3) {
         error("Usage: compress <input_file> <output_file>");
     }
 
-    // Open input file
+    // Open input file using a custom input stream class
     FancyInputStream input(argv[1]);
 
-
-    // Handle empty file
+    // Handle the case where the input file is empty
     if (input.filesize() == 0) {
+        // Open output file using a custom output stream class
         FancyOutputStream output(argv[2]);
         return 0; 
     }
 
-    // Read bytes and count number of occurrences
-    vector<int> freqs(256, 0);
-    int numSymbols = 0;
+    // Read bytes from the input file and count the frequency of each byte (symbol)
+    vector<int> freqs(256, 0);  // Vector to store frequencies of each byte (0-255)
+    int numSymbols = 0;  // Variable to count the number of unique symbols
 
     while (true) {
-        int byte = input.read_byte();
-        if (byte == -1) {
+        int byte = input.read_byte();  // Read a byte from the input file
+        if (byte == -1) {  // Check for end of file
             break;
         }
-        freqs[byte]++;
+        freqs[byte]++;  // Increment the frequency count for the read byte
         if (freqs[byte] == 1) {
-            numSymbols++; // Count unique symbols
+            numSymbols++;  // Increment unique symbol count if this is the first occurrence
         }
     }
 
-    // Build the Huffman tree with the given frequencies
+    // Build the Huffman tree using the frequencies of each byte
     HCTree tree;
     tree.build(freqs);
 
-    // Open output file
+    // Open output file for writing the compressed data
     FancyOutputStream output(argv[2]);
 
-    // Write the number of unique symbols
+    // Write the number of unique symbols to the output file
     output.write_int(numSymbols);
 
-    // Write symbol frequencies (optimized)
+    // Write the symbol frequencies to the output file in an optimized format
     for (int i = 0; i < 256; ++i) {
         if (freqs[i] > 0) {
-            output.write_byte(i); // Write the symbol
+            output.write_byte(i);  // Write the symbol
             int freq = freqs[i];
-            // Write frequency using 3 bytes
+            // Write the frequency using 3 bytes (big-endian format)
             output.write_byte((freq >> 16) & 0xFF);
             output.write_byte((freq >> 8) & 0xFF);
             output.write_byte(freq & 0xFF);
         }
     }
 
-    // Move back to the beginning of the input file
+    // Reset the input stream to the beginning of the file
     input.reset();
 
-    // Encode each byte from the input file using the Huffman coding tree and write to output file
+    // Encode each byte from the input file using the Huffman coding tree and write the encoded bits to the output file
     while (true) {
-        int byte = input.read_byte();
-        if (byte == -1) {
-            break; // End of input file
+        int byte = input.read_byte();  // Read a byte from the input file
+        if (byte == -1) {  // Check for end of file
+            break;  // End of input file
         }
-        tree.encode(byte, output);
+        tree.encode(byte, output);  // Encode the byte and write the encoded bits to the output file
     }
 
-    return 0;
+    return 0;  // Return 0 to indicate successful execution
 }
 
-// vector<int> freqs(256, 0);
-    // freqs['a'] = 5;
-    // freqs['b'] = 9;
-    // freqs['c'] = 12;
-    // freqs['d'] = 13;
-    // freqs['e'] = 16;
-    // freqs['f'] = 45;
-
-    // // Create HCTree instance
-    // HCTree tree;
-
-    // // Build the Huffman tree with the given frequencies
-    // tree.build(freqs);
-
-    // // Print the tree structure
-    // cout << "Huffman Tree Structure:\n";
-    // printTree(tree.getRoot());  // Assuming you have a getter for the root
-
-    // return 0;
-
-// Level Order Traversal 
-// void printTree(HCNode* root) {
-//     if (!root)
-//         return;
-
-//     queue<HCNode*> nodeQueue;
-//     nodeQueue.push(root);
-
-//     while (!nodeQueue.empty()) {
-//         HCNode* current = nodeQueue.front();
-//         nodeQueue.pop();
-
-//         cout << "Node (symbol: " << current->symbol << ", count: " << current->count << ")\n";
-
-//         if (current->c0)
-//             nodeQueue.push(current->c0);
-//         if (current->c1)
-//             nodeQueue.push(current->c1);
-//     }
-// }
 
 
