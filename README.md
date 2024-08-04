@@ -1,7 +1,5 @@
 
-# Huffman Compression and Decompression
-
-## Project Description
+## Overview
 
 This project implements Huffman compression and decompression algorithms in C++. The program compresses an input file using Huffman coding, a lossless data compression algorithm, and decompresses it back to its original form.
 
